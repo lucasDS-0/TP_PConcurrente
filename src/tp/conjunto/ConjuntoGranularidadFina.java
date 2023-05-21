@@ -42,8 +42,7 @@ public class ConjuntoGranularidadFina<T> implements Conjunto<T>{
                 while(true){
                     if(!nodoSuc.elemento().isPresent()) break;
                     T elementoSuc = nodoSuc.elemento().get();
-                    if(comparator.compare(elementoSuc,elementoNuevo)>0)
-                        {_intercalarElemento(elementoNuevo,nodoAnt,nodoSuc); return true;}
+                    if(comparator.compare(elementoSuc,elementoNuevo)>0) break;
                     else if(comparator.compare(elementoSuc,elementoNuevo)==0) return false;
                     
                     nodoAnt.desbloquear();
@@ -53,7 +52,8 @@ public class ConjuntoGranularidadFina<T> implements Conjunto<T>{
 
                 }
             }finally{nodoSuc.desbloquear();}            
-            {_intercalarElemento(elementoNuevo,nodoAnt,nodoSuc); return true;}
+            _intercalarElemento(elementoNuevo,nodoAnt,nodoSuc);
+            return true;
         }finally{nodoAnt.desbloquear();}	    
 	}
 

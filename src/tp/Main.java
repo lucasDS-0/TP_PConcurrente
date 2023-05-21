@@ -9,13 +9,14 @@ public class Main{
 	public static void main (String[] args){
    	    System.out.println("Hola");
         Comparator<String> comparador = Comparator.comparing(String::toString);
-        manipularParaProbar(new ConjuntoSinConcurrencia.Factory<String>(),comparador);
-        manipularParaProbar(new ConjuntoGranularidadGruesa.Factory<String>(),comparador);
-        manipularParaProbar(new ConjuntoGranularidadFina.Factory<String>(),comparador);
+        _manipularParaProbar(new ConjuntoSinConcurrencia.Factory<String>(),comparador);
+        _manipularParaProbar(new ConjuntoGranularidadGruesa.Factory<String>(),comparador);
+        _manipularParaProbar(new ConjuntoGranularidadFina.Factory<String>(),comparador);
+        _manipularParaProbar(new ConjuntoSincronizacionOptimista.Factory<String>(),comparador);
 		System.out.println("Chau");
 	}
 	
-	private static void manipularParaProbar(Conjunto.Factory<String> f,Comparator<String> comparador){
+	private static void _manipularParaProbar(Conjunto.Factory<String> f,Comparator<String> comparador){
 	   	System.out.println("manipularParaProbar::INI");
 	    Conjunto<String> c = f.armarConjuntoVacio(comparador);
 	    System.out.println("manipularParaProbar::c.class: " + c.getClass().getName());
