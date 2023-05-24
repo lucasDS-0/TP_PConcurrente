@@ -13,6 +13,7 @@ public class Main{
         _manipularParaProbar(new ConjuntoGranularidadGruesa.Factory<String>(),comparador);
         _manipularParaProbar(new ConjuntoGranularidadFina.Factory<String>(),comparador);
         _manipularParaProbar(new ConjuntoSincronizacionOptimista.Factory<String>(),comparador);
+        _manipularParaProbar(new ConjuntoSinLocks.Factory<String>(),comparador);
 		System.out.println("Chau");
 	}
 	
