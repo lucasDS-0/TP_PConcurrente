@@ -6,8 +6,8 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
 public class NodoSinLocksSinElemento<T> extends NodoSinLocks<T>{
 
     public NodoSinLocksSinElemento(){}
-    public NodoSinLocksSinElemento(AtomicMarkableReference<NodoSinLocksSinElemento<T>> sucesor){
-    	this.sucesor.set(sucesor.getReference(), false);
+    public NodoSinLocksSinElemento(AtomicMarkableReference<NodoSinLocks<T>> sucesor){
+    	this.sucesor = sucesor;
     }
 
     @Override public Optional<T> elemento(){return Optional.empty();}

@@ -11,7 +11,7 @@ public class ConjuntoSinLocks<T> implements Conjunto<T>{
     
    	private AtomicMarkableReference<NodoSinLocksSinElemento<T>> marcaDeInicio = 
     new AtomicMarkableReference<NodoSinLocksSinElemento<T>>(new NodoSinLocksSinElemento<T>(
-        new AtomicMarkableReference<NodoSinLocksSinElemento<T>>(new NodoSinLocksSinElemento<T>(), false)), false);
+        new AtomicMarkableReference<NodoSinLocks<T>>(new NodoSinLocksSinElemento<T>(), false)), false);
 
     private Comparator<T> comparator;
     

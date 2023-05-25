@@ -8,7 +8,7 @@ public class NodoSinLocksConElemento<T> extends NodoSinLocks<T>{
     
     public NodoSinLocksConElemento(T elemento,AtomicMarkableReference<NodoSinLocks<T>> sucesor){
         this.elemento = elemento;
-        this.sucesor.set(sucesor.getReference(), false);
+        this.sucesor = sucesor;
     }
 
     @Override public Optional<T> elemento(){return Optional.of(elemento);}
