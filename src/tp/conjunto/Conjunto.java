@@ -6,6 +6,7 @@ import java.util.Comparator;
 public interface Conjunto<T>{
 	public boolean agregar(T elemento);
 	public boolean remover(T elemento);
+	public boolean contiene(T elemento);
 	
 	public interface Factory<T>{
         public Conjunto<T> armarConjuntoVacio(Comparator<T> comparator);

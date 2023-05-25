@@ -22,12 +22,12 @@ public class ConjuntoSincronizacionOptimista<T> implements Conjunto<T>{
 	
     @Override public String toString(){
         StringBuilder sb = new StringBuilder();
-        NodoBloqueante<T> nodo = this.marcaDeInicio;
-        NodoBloqueante<T> nodoSuc = nodo.sucesor();
-        while(nodoSuc.elemento().isPresent()){
-            sb.append(nodoSuc.elemento().get());
-            nodo = nodoSuc;
-            nodoSuc = nodo.sucesor();
+        NodoBloqueante<T> nodoAnt = this.marcaDeInicio;
+        NodoBloqueante<T> nodoAct = nodoAnt.sucesor();
+        while(nodoAct.elemento().isPresent()){
+            sb.append(nodoAct.elemento().get());
+            nodoAnt = nodoAct;
+            nodoAct = nodoAnt.sucesor();
         }
         return sb.toString();
     }
@@ -35,25 +35,25 @@ public class ConjuntoSincronizacionOptimista<T> implements Conjunto<T>{
 	@Override public boolean agregar(T elementoNuevo){
         while(true){
             NodoBloqueante<T> nodoAnt = this.marcaDeInicio;
-            NodoBloqueante<T> nodoSuc = nodoAnt.sucesor();
+            NodoBloqueante<T> nodoAct = nodoAnt.sucesor();
             while(true){
-                if(!nodoSuc.elemento().isPresent()) break;
-                T elementoSuc = nodoSuc.elemento().get();
-                if(comparator.compare(elementoSuc,elementoNuevo)>0) break;
-                else if(comparator.compare(elementoSuc,elementoNuevo)==0) return false;
+                if(!nodoAct.elemento().isPresent()) break;
+                T elementoAct = nodoAct.elemento().get();
+                if(comparator.compare(elementoAct,elementoNuevo)>0) break;
+                else if(comparator.compare(elementoAct,elementoNuevo)==0) return false;
 
-                nodoAnt = nodoSuc;
-                nodoSuc = nodoAnt.sucesor();        
+                nodoAnt = nodoAct;
+                nodoAct = nodoAnt.sucesor();        
             }
             nodoAnt.bloquear();
-            nodoSuc.bloquear();
+            nodoAct.bloquear();
             try{
-                if(_validarAdyacencia(nodoAnt,nodoSuc))
-                    {_intercalarElemento(elementoNuevo,nodoAnt,nodoSuc); return true;}
+                if(_validarAdyacencia(nodoAnt,nodoAct))
+                    {_intercalarElemento(elementoNuevo,nodoAnt,nodoAct); return true;}
                 else continue;
             }finally{
                 nodoAnt.desbloquear();
-                nodoSuc.desbloquear();
+                nodoAct.desbloquear();
             }
         }
     }
@@ -74,27 +74,52 @@ public class ConjuntoSincronizacionOptimista<T> implements Conjunto<T>{
 	@Override public boolean remover(T elementoARemover){
 	    while(true){
             NodoBloqueante<T> nodoAnt = this.marcaDeInicio;
-            NodoBloqueante<T> nodoSuc = nodoAnt.sucesor();
+            NodoBloqueante<T> nodoAct = nodoAnt.sucesor();
             while(true){
-                if(!nodoSuc.elemento().isPresent()) return false;
-                T elementoSuc = nodoSuc.elemento().get();
-                if(comparator.compare(elementoSuc,elementoARemover)>0) return false;
-                else if(comparator.compare(elementoSuc,elementoARemover)==0) break;
+                if(!nodoAct.elemento().isPresent()) return false;
+                T elementoAct = nodoAct.elemento().get();
+                if(comparator.compare(elementoAct,elementoARemover)>0) return false;
+                else if(comparator.compare(elementoAct,elementoARemover)==0) break;
 
-                nodoAnt = nodoSuc;
-                nodoSuc = nodoAnt.sucesor();        
+                nodoAnt = nodoAct;
+                nodoAct = nodoAnt.sucesor();        
             }
             nodoAnt.bloquear();
-            nodoSuc.bloquear();
+            nodoAct.bloquear();
             try{
-                if(_validarAdyacencia(nodoAnt,nodoSuc))
-                    {nodoAnt.nuevoSucesor(nodoSuc.sucesor()); return true;}
+                if(_validarAdyacencia(nodoAnt,nodoAct))
+                    {nodoAnt.nuevoSucesor(nodoAct.sucesor()); return true;}
                 else continue;
             }finally{
                 nodoAnt.desbloquear();
-                nodoSuc.desbloquear();
+                nodoAct.desbloquear();
             }
         }
 	}
+
+    @Override public boolean contiene(T elementoAVerificar){
+        while(true){
+            NodoBloqueante<T> nodoAnt = this.marcaDeInicio;
+            NodoBloqueante<T> nodoAct = nodoAnt.sucesor();
+            T elementoAct = nodoAct.elemento().get();
+            while(comparator.compare(elementoAct,elementoAVerificar)<0){
+                nodoAnt = nodoAct;
+                nodoAct = nodoAnt.sucesor();
+                if(!nodoAct.elemento().isPresent()) return false;
+                elementoAct = nodoAct.elemento().get();
+            }
+            try{
+                nodoAnt.bloquear();
+                nodoAct.bloquear();
+                if(_validarAdyacencia(nodoAnt, nodoAct)){
+                    elementoAct = nodoAct.elemento().get();
+                    return (comparator.compare(elementoAct,elementoAVerificar)==0);
+                }
+            }finally{
+                nodoAnt.desbloquear();
+                nodoAct.desbloquear();
+            }
+        }
+    }
 
 }

@@ -27,12 +27,12 @@ public class ConjuntoSinLocks<T> implements Conjunto<T>{
 	
     @Override public String toString(){
         StringBuilder sb = new StringBuilder();
-        NodoSinLocks<T> nodoAct = this.marcaDeInicio.getReference();
-        NodoSinLocks<T> nodoSuc = nodoAct.sucesor().getReference();
-        while(nodoSuc.elemento().isPresent()){
-            sb.append(nodoSuc.elemento().get());
-            nodoAct = nodoSuc;
-            nodoSuc = nodoAct.sucesor().getReference();
+        NodoSinLocks<T> nodoAnt = this.marcaDeInicio.getReference();
+        NodoSinLocks<T> nodoAct = nodoAnt.sucesor().getReference();
+        while(nodoAct.elemento().isPresent()){
+            sb.append(nodoAct.elemento().get());
+            nodoAnt = nodoAct;
+            nodoAct = nodoAnt.sucesor().getReference();
         }
         return sb.toString();
     }
@@ -117,5 +117,15 @@ public class ConjuntoSinLocks<T> implements Conjunto<T>{
             }   
         }
 	}
+
+    @Override public boolean contiene(T elementoAVerificar){
+        boolean snip;
+        while(true){
+            Pair<NodoSinLocks<T>> par = find(elementoAVerificar);
+            NodoSinLocks<T> nodoAnt = par.getFst();
+            NodoSinLocks<T> nodoAct = par.getSnd();
+            return (comparator.compare(nodoAct.elemento().get(), elementoAVerificar)==0);
+        }
+    }
 
 }

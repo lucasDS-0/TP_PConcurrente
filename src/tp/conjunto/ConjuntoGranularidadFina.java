@@ -22,12 +22,12 @@ public class ConjuntoGranularidadFina<T> implements Conjunto<T>{
 	
     @Override public String toString(){
         StringBuilder sb = new StringBuilder();
-        NodoBloqueante<T> nodo = this.marcaDeInicio;
-        NodoBloqueante<T> nodoSuc = nodo.sucesor();
-        while(nodoSuc.elemento().isPresent()){
-            sb.append(nodoSuc.elemento().get());
-            nodo = nodoSuc;
-            nodoSuc = nodo.sucesor();
+        NodoBloqueante<T> nodoAnt = this.marcaDeInicio;
+        NodoBloqueante<T> nodoAct = nodoAnt.sucesor();
+        while(nodoAct.elemento().isPresent()){
+            sb.append(nodoAct.elemento().get());
+            nodoAnt = nodoAct;
+            nodoAct = nodoAnt.sucesor();
         }
         return sb.toString();
     }
@@ -36,24 +36,24 @@ public class ConjuntoGranularidadFina<T> implements Conjunto<T>{
         NodoBloqueante<T> nodoAnt = this.marcaDeInicio;
         nodoAnt.bloquear();
         try{
-            NodoBloqueante<T> nodoSuc = nodoAnt.sucesor();
-            nodoSuc.bloquear();
+            NodoBloqueante<T> nodoAct = nodoAnt.sucesor();
+            nodoAct.bloquear();
             try{
                 while(true){
-                    if(!nodoSuc.elemento().isPresent()) break;
-                    T elementoSuc = nodoSuc.elemento().get();
-                    if(comparator.compare(elementoSuc,elementoNuevo)>0) break;
-                    else if(comparator.compare(elementoSuc,elementoNuevo)==0) return false;
+                    if(!nodoAct.elemento().isPresent()) break;
+                    T elementoAct = nodoAct.elemento().get();
+                    if(comparator.compare(elementoAct,elementoNuevo)>0) break;
+                    else if(comparator.compare(elementoAct,elementoNuevo)==0) return false;
                     
                     nodoAnt.desbloquear();
-                    nodoAnt = nodoSuc;
-                    nodoSuc = nodoAnt.sucesor();        
-                    nodoSuc.bloquear();
+                    nodoAnt = nodoAct;
+                    nodoAct = nodoAnt.sucesor();        
+                    nodoAct.bloquear();
                 }
-            }finally{nodoSuc.desbloquear();}            
-            _intercalarElemento(elementoNuevo,nodoAnt,nodoSuc);
+            }finally{nodoAct.desbloquear();}            
+            _intercalarElemento(elementoNuevo,nodoAnt,nodoAct);
             return true;
-        }finally{nodoAnt.desbloquear();}	    
+        }finally{nodoAnt.desbloquear();}
 	}
 
 	private void _intercalarElemento(T elemento, NodoBloqueante<T> despuesDe,NodoBloqueante<T> antesDe){
@@ -64,22 +64,43 @@ public class ConjuntoGranularidadFina<T> implements Conjunto<T>{
         NodoBloqueante<T> nodoAnt = this.marcaDeInicio;
         nodoAnt.bloquear();
         try{
-            NodoBloqueante<T> nodo = nodoAnt.sucesor();
-            nodo.bloquear();
+            NodoBloqueante<T> nodoAct = nodoAnt.sucesor();
+            nodoAct.bloquear();
             try{
                 while(true){
-                    if(!nodo.elemento().isPresent()) return false;
-                    T elemento = nodo.elemento().get();
-                    if(comparator.compare(elemento,elementoARemover)>0)return false;
-                    if(comparator.compare(elemento,elementoARemover)==0)
-                        {nodoAnt.nuevoSucesor(nodo.sucesor()); return true;}
+                    if(!nodoAct.elemento().isPresent()) return false;
+                    T elementoAct = nodoAct.elemento().get();
+                    if(comparator.compare(elementoAct,elementoARemover)>0)return false;
+                    if(comparator.compare(elementoAct,elementoARemover)==0)
+                        {nodoAnt.nuevoSucesor(nodoAct.sucesor()); return true;}
                     nodoAnt.desbloquear();
-                    nodoAnt = nodo;
-                    nodo = nodoAnt.sucesor();        
-                    nodo.bloquear();
+                    nodoAnt = nodoAct;
+                    nodoAct = nodoAnt.sucesor();        
+                    nodoAct.bloquear();
                 }
-            }finally{nodo.desbloquear();}            
+            }finally{nodoAct.desbloquear();}            
         }finally{nodoAnt.desbloquear();}	    
 	}
+
+    @Override public boolean contiene(T elementoAVerificar){
+        NodoBloqueante<T> nodoAnt = this.marcaDeInicio;
+        nodoAnt.bloquear();
+        try{
+            NodoBloqueante<T> nodoAct = nodoAnt.sucesor();
+            nodoAct.bloquear();
+            try{
+                T elementoAct = nodoAct.elemento().get();
+                while(comparator.compare(elementoAct,elementoAVerificar)<0){
+                    nodoAnt.desbloquear();
+                    nodoAnt = nodoAct;
+                    nodoAct = nodoAnt.sucesor();        
+                    nodoAct.bloquear();
+                    if(!nodoAct.elemento().isPresent()) return false;
+                    elementoAct = nodoAct.elemento().get();
+                }
+                return (comparator.compare(elementoAct,elementoAVerificar)==0);
+            }finally{nodoAct.desbloquear();}
+        }finally{nodoAnt.desbloquear();}
+    }
 
 }

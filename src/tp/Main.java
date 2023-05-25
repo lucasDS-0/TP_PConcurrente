@@ -6,14 +6,18 @@ import java.util.Comparator;
 
 public class Main{
 
+    private int cantidadDeHilos = 50;
+    private int cantidadMaxDeOperaciones = 250;
+    private int cantidadDeOperacionesPorHilo = 5;
+        
 	public static void main (String[] args){
    	    System.out.println("Hola");
         Comparator<String> comparador = Comparator.comparing(String::toString);
-        _manipularParaProbar(new ConjuntoSinConcurrencia.Factory<String>(),comparador);
-        _manipularParaProbar(new ConjuntoGranularidadGruesa.Factory<String>(),comparador);
+        //_manipularParaProbar(new ConjuntoSinConcurrencia.Factory<String>(),comparador);
+        //_manipularParaProbar(new ConjuntoGranularidadGruesa.Factory<String>(),comparador);
         _manipularParaProbar(new ConjuntoGranularidadFina.Factory<String>(),comparador);
         _manipularParaProbar(new ConjuntoSincronizacionOptimista.Factory<String>(),comparador);
-        _manipularParaProbar(new ConjuntoSinLocks.Factory<String>(),comparador);
+        //_manipularParaProbar(new ConjuntoSinLocks.Factory<String>(),comparador);
 		System.out.println("Chau");
 	}
 	
@@ -31,7 +35,14 @@ public class Main{
 	    c.remover("A"); System.out.println(c);    // C,D,E
 	    c.remover("X"); System.out.println(c);    // C,D,E
 	    c.remover("E"); System.out.println(c);    // C,D
+	    System.out.println(c.contiene("A"));      // false
+	    System.out.println(c.contiene("B"));      // false
+	    System.out.println(c.contiene("C"));      // true
+	    System.out.println(c.contiene("D"));      // true
+	    System.out.println(c.contiene("E"));      // false
+	    System.out.println(c.contiene("X"));      // false
 	    System.out.println("manipularParaProbar::FIN");
 	}
+
 
 }
