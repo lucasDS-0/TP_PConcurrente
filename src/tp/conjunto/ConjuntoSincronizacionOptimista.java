@@ -45,9 +45,9 @@ public class ConjuntoSincronizacionOptimista<T> implements Conjunto<T>{
                 nodoAnt = nodoSuc;
                 nodoSuc = nodoAnt.sucesor();        
             }
+            nodoAnt.bloquear();
+            nodoSuc.bloquear();
             try{
-                nodoAnt.bloquear();
-                nodoSuc.bloquear();
                 if(_validarAdyacencia(nodoAnt,nodoSuc))
                     {_intercalarElemento(elementoNuevo,nodoAnt,nodoSuc); return true;}
                 else continue;
@@ -84,9 +84,9 @@ public class ConjuntoSincronizacionOptimista<T> implements Conjunto<T>{
                 nodoAnt = nodoSuc;
                 nodoSuc = nodoAnt.sucesor();        
             }
+            nodoAnt.bloquear();
+            nodoSuc.bloquear();
             try{
-                nodoAnt.bloquear();
-                nodoSuc.bloquear();
                 if(_validarAdyacencia(nodoAnt,nodoSuc))
                     {nodoAnt.nuevoSucesor(nodoSuc.sucesor()); return true;}
                 else continue;

@@ -34,11 +34,11 @@ public class ConjuntoGranularidadFina<T> implements Conjunto<T>{
 
 	@Override public boolean agregar(T elementoNuevo){
         NodoBloqueante<T> nodoAnt = this.marcaDeInicio;
+        nodoAnt.bloquear();
         try{
-            nodoAnt.bloquear();
             NodoBloqueante<T> nodoSuc = nodoAnt.sucesor();
+            nodoSuc.bloquear();
             try{
-                nodoSuc.bloquear();                
                 while(true){
                     if(!nodoSuc.elemento().isPresent()) break;
                     T elementoSuc = nodoSuc.elemento().get();
@@ -49,7 +49,6 @@ public class ConjuntoGranularidadFina<T> implements Conjunto<T>{
                     nodoAnt = nodoSuc;
                     nodoSuc = nodoAnt.sucesor();        
                     nodoSuc.bloquear();
-
                 }
             }finally{nodoSuc.desbloquear();}            
             _intercalarElemento(elementoNuevo,nodoAnt,nodoSuc);
@@ -63,11 +62,11 @@ public class ConjuntoGranularidadFina<T> implements Conjunto<T>{
 	
 	@Override public boolean remover(T elementoARemover){
         NodoBloqueante<T> nodoAnt = this.marcaDeInicio;
+        nodoAnt.bloquear();
         try{
-            nodoAnt.bloquear();
             NodoBloqueante<T> nodo = nodoAnt.sucesor();
+            nodo.bloquear();
             try{
-                nodo.bloquear();                
                 while(true){
                     if(!nodo.elemento().isPresent()) return false;
                     T elemento = nodo.elemento().get();
