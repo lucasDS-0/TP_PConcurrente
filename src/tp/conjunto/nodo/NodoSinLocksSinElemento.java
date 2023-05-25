@@ -11,5 +11,4 @@ public class NodoSinLocksSinElemento<T> extends NodoSinLocks<T>{
     }
 
     @Override public Optional<T> elemento(){return Optional.empty();}
-    @Override public int sumaElemento(){return 0;}
 }

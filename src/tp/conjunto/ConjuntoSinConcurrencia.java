@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public class ConjuntoSinConcurrencia<T> implements Conjunto<T>{
     
-   	private MarcaDeInicio<T> marcaDeInicio = new MarcaDeInicio<T>();
+   	private NodoSinElemento<T> marcaDeInicio = new NodoSinElemento<T>();
     private Comparator<T> comparator;
     
     public static class Factory<T> implements Conjunto.Factory<T>{

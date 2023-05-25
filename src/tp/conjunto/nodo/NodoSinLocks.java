@@ -8,7 +8,6 @@ public abstract class NodoSinLocks<T>{
     protected AtomicMarkableReference<NodoSinLocks<T>> sucesor;
         
     public abstract Optional<T> elemento();
-    public abstract int sumaElemento();
     
     public AtomicMarkableReference<NodoSinLocks<T>> sucesor(){return sucesor;}
     public void nuevoSucesor(AtomicMarkableReference<NodoSinLocks<T>> nuevoSucesor){

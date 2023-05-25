@@ -13,7 +13,6 @@ public abstract class NodoBloqueante<T>{
     public void desbloquear(){lock.unlock();}
     
     public abstract Optional<T> elemento();
-    public abstract int sumaElemento();
     
     public NodoBloqueante<T> sucesor(){return sucesor;}
     public void nuevoSucesor(NodoBloqueante<T> nuevoSucesor){this.sucesor = nuevoSucesor;}

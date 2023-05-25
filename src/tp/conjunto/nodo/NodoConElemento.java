@@ -11,6 +11,5 @@ public class NodoConElemento<T> extends Nodo<T>{
     }
 
     @Override public Optional<T> elemento(){return Optional.of(elemento);}
-    @Override public int sumaElemento(){return 1;}
 }
 

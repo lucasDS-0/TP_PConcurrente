@@ -11,6 +11,5 @@ public class NodoBloqueanteConElemento<T> extends NodoBloqueante<T>{
     }
 
     @Override public Optional<T> elemento(){return Optional.of(elemento);}
-    @Override public int sumaElemento(){return 1;}
 }
 
