@@ -89,6 +89,7 @@ public class ConjuntoGranularidadFina<T> implements Conjunto<T>{
             NodoBloqueante<T> nodoAct = nodoAnt.sucesor();
             nodoAct.bloquear();
             try{
+                if(!nodoAct.elemento().isPresent()) return false;
                 T elementoAct = nodoAct.elemento().get();
                 while(comparator.compare(elementoAct,elementoAVerificar)<0){
                     nodoAnt.desbloquear();
