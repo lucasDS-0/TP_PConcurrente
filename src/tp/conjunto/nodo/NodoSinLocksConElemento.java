@@ -1,3 +1,5 @@
+
+/*
 package tp.conjunto.nodo;
 
 import java.util.Optional;
@@ -13,3 +15,4 @@ public class NodoSinLocksConElemento<T> extends NodoSinLocks<T>{
 
     @Override public Optional<T> elemento(){return Optional.of(elemento);}
 }
+*/

@@ -3,14 +3,31 @@ package tp.conjunto.nodo;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicMarkableReference;
 
-public abstract class NodoSinLocks<T>{
+public class NodoSinLocks<T>{
 
-    protected AtomicMarkableReference<NodoSinLocks<T>> sucesor;
+    private int key;
+    private T elemento = null;
+    public AtomicMarkableReference<NodoSinLocks<T>> sucesor;
         
-    public abstract Optional<T> elemento();
+    public NodoSinLocks(int key){
+        this.key = key;
+    }
+
+    public NodoSinLocks(int key, T elemento){
+        this.key = key;
+        this.elemento = elemento;
+        this.sucesor = null;
+    }
+
+    public int key() {
+        return this.key;
+    }
+
+    public T elemento(){
+        return elemento;
+    }
     
-    public AtomicMarkableReference<NodoSinLocks<T>> sucesor(){return sucesor;}
-    public void nuevoSucesor(AtomicMarkableReference<NodoSinLocks<T>> nuevoSucesor){
-        this.sucesor.set(nuevoSucesor.getReference(), false);
+    public AtomicMarkableReference<NodoSinLocks<T>> sucesor(){
+        return sucesor;
     }
 }

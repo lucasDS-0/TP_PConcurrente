@@ -9,9 +9,10 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class ConjuntoSinLocks<T> implements Conjunto<T>{
     
-   	private AtomicMarkableReference<NodoSinLocksSinElemento<T>> marcaDeInicio = 
-    new AtomicMarkableReference<NodoSinLocksSinElemento<T>>(new NodoSinLocksSinElemento<T>(
-        new AtomicMarkableReference<NodoSinLocks<T>>(new NodoSinLocksSinElemento<T>(), false)), false);
+   	private NodoSinLocks<T> marcaDeInicio = new NodoSinLocks<T>(Integer.MIN_VALUE);
+    private NodoSinLocks<T> marcaDeFin = new NodoSinLocks<T>(Integer.MAX_VALUE);
+
+    
 
     private Comparator<T> comparator;
     
@@ -22,15 +23,16 @@ public class ConjuntoSinLocks<T> implements Conjunto<T>{
     }
 
     private ConjuntoSinLocks(Comparator<T> comparator){
+        marcaDeInicio.sucesor = new AtomicMarkableReference<NodoSinLocks<T>>(marcaDeFin, false);
         this.comparator = comparator;
     }
 	
     @Override public String toString(){
         StringBuilder sb = new StringBuilder();
-        NodoSinLocks<T> nodoAnt = this.marcaDeInicio.getReference();
+        NodoSinLocks<T> nodoAnt = this.marcaDeInicio;
         NodoSinLocks<T> nodoAct = nodoAnt.sucesor().getReference();
-        while(nodoAct.elemento().isPresent()){
-            sb.append(nodoAct.elemento().get());
+        while(nodoAct.elemento() != null){
+            sb.append(nodoAct.elemento());
             nodoAnt = nodoAct;
             nodoAct = nodoAnt.sucesor().getReference();
         }
@@ -50,49 +52,49 @@ public class ConjuntoSinLocks<T> implements Conjunto<T>{
         T getSnd(){return this.snd;}
     }
 
-    public Pair<NodoSinLocks<T>> find(T elemento){
-        NodoSinLocks<T> nodoAnt;
-        NodoSinLocks<T> nodoAct;
-        NodoSinLocks<T> nodoSuc;
+    public Pair<NodoSinLocks<T>> find(T elemento, int key){
+        NodoSinLocks<T> nodoAnt = null;
+        NodoSinLocks<T> nodoAct = null;
+        NodoSinLocks<T> nodoSuc = null;
 
         boolean[] marked = {false};
         boolean snip = false;
     
-        while(true){
-            nodoAnt = this.marcaDeInicio.getReference();
+        retry: while(true){
+            nodoAnt = this.marcaDeInicio;
             nodoAct = nodoAnt.sucesor().getReference();
             while(true){
-                nodoSuc = nodoAct.sucesor().get(marked);
-                while(marked[0]){
-                    snip = nodoAnt.sucesor().compareAndSet(nodoAct, nodoSuc, false, false);
-                    if (snip) {
+                if (nodoAct.key() != Integer.MAX_VALUE) {
+                    nodoSuc = nodoAct.sucesor().get(marked);
+                    while(marked[0]){
+                        snip = nodoAnt.sucesor().compareAndSet(nodoAct, nodoSuc, false, false);
+                        if (!snip) continue retry;
                         nodoAct = nodoSuc;
                         nodoSuc = nodoAct.sucesor().get(marked);
                     }
                 }
-                if (snip){
-                    if (comparator.compare(nodoAct.elemento().get(), elemento)>=0){
-                        Pair<NodoSinLocks<T>> res = new Pair<NodoSinLocks<T>>(nodoAnt, nodoAct);
-                        return res;
-                    }
-                    nodoAnt = nodoAct;
-                    nodoAct = nodoSuc;
+                if (nodoAct.key() >= key){
+                    Pair<NodoSinLocks<T>> res = new Pair<NodoSinLocks<T>>(nodoAnt, nodoAct);
+                    return res;
                 }
+                nodoAnt = nodoAct;
+                nodoAct = nodoSuc;
             }
         }
 
     }
 
 	@Override public boolean agregar(T elementoNuevo){
+        int key = elementoNuevo.hashCode();
         while(true){
-            Pair<NodoSinLocks<T>> par = find(elementoNuevo);
+            Pair<NodoSinLocks<T>> par = find(elementoNuevo, key);
             NodoSinLocks<T> nodoAnt = par.getFst();
             NodoSinLocks<T> nodoAct = par.getSnd();
-            if (comparator.compare(nodoAct.elemento().get(), elementoNuevo)==0) {
+            if (nodoAct.key() == key) {
                 return false;
             }else{
-                NodoSinLocksConElemento<T> nodoNuevo = 
-                new NodoSinLocksConElemento<T>(elementoNuevo, new AtomicMarkableReference<NodoSinLocks<T>>(nodoAct,false));
+                NodoSinLocks<T> nodoNuevo = new NodoSinLocks<T>(key, elementoNuevo);
+                nodoNuevo.sucesor = new AtomicMarkableReference<NodoSinLocks<T>>(nodoAct, false);
                 if (nodoAnt.sucesor().compareAndSet(nodoAct, nodoNuevo, false, false))
                     return true;
             }
@@ -101,12 +103,13 @@ public class ConjuntoSinLocks<T> implements Conjunto<T>{
     
 	
 	@Override public boolean remover(T elementoARemover){
+        int key = elementoARemover.hashCode();
 	    boolean snip;
         while(true){
-            Pair<NodoSinLocks<T>> par = find(elementoARemover);
+            Pair<NodoSinLocks<T>> par = find(elementoARemover, key);
             NodoSinLocks<T> nodoAnt = par.getFst();
             NodoSinLocks<T> nodoAct = par.getSnd();
-            if (comparator.compare(nodoAct.elemento().get(), elementoARemover)!=0) {
+            if (nodoAct.key() != key) {
                 return false;
             }else{
                 NodoSinLocks<T> nodoSuc = nodoAct.sucesor().getReference();
@@ -119,13 +122,15 @@ public class ConjuntoSinLocks<T> implements Conjunto<T>{
 	}
 
     @Override public boolean contiene(T elementoAVerificar){
-        boolean snip;
-        while(true){
-            Pair<NodoSinLocks<T>> par = find(elementoAVerificar);
-            NodoSinLocks<T> nodoAnt = par.getFst();
-            NodoSinLocks<T> nodoAct = par.getSnd();
-            return (comparator.compare(nodoAct.elemento().get(), elementoAVerificar)==0);
+        boolean[] marked = {false};
+        int key = elementoAVerificar.hashCode();
+        NodoSinLocks<T> nodoAct = this.marcaDeInicio;
+        while(nodoAct.key() < key){
+            nodoAct = nodoAct.sucesor().getReference();
+            if(nodoAct.key() == Integer.MAX_VALUE) break;
+            NodoSinLocks<T> nodoSuc = nodoAct.sucesor().get(marked);
         }
+        return (nodoAct.key() == key && !marked[0]);
     }
 
 }

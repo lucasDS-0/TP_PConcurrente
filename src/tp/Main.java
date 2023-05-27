@@ -21,7 +21,7 @@ public class Main{
         //_manipularParaProbar(new ConjuntoSinLocks.Factory<String>(),comparador);
 		System.out.println("Chau");
 		
-        Conjunto.Factory<String> f = new ConjuntoGranularidadFina.Factory<String>();
+        Conjunto.Factory<String> f = new ConjuntoSinLocks.Factory<String>();
 		
 		int cantidadAgregar = cantidadDeHilos/3;
 		int cantidadContiene = cantidadDeHilos/3;
