@@ -101,6 +101,7 @@ public class ConjuntoSincronizacionOptimista<T> implements Conjunto<T>{
         while(true){
             NodoBloqueante<T> nodoAnt = this.marcaDeInicio;
             NodoBloqueante<T> nodoAct = nodoAnt.sucesor();
+            if(!nodoAct.elemento().isPresent()) return false;
             T elementoAct = nodoAct.elemento().get();
             while(comparator.compare(elementoAct,elementoAVerificar)<0){
                 nodoAnt = nodoAct;

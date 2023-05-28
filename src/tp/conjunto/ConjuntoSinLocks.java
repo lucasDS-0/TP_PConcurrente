@@ -12,8 +12,6 @@ public class ConjuntoSinLocks<T> implements Conjunto<T>{
    	private NodoSinLocks<T> marcaDeInicio = new NodoSinLocks<T>(Integer.MIN_VALUE);
     private NodoSinLocks<T> marcaDeFin = new NodoSinLocks<T>(Integer.MAX_VALUE);
 
-    
-
     private Comparator<T> comparator;
     
     public static class Factory<T> implements Conjunto.Factory<T>{
@@ -117,7 +115,7 @@ public class ConjuntoSinLocks<T> implements Conjunto<T>{
                 if (!snip) {continue;}
                 nodoAnt.sucesor().compareAndSet(nodoAct, nodoSuc, false, false);
                 return true;
-            }   
+            }
         }
 	}
 
