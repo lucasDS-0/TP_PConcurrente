@@ -61,4 +61,8 @@ public class ConjuntoSinConcurrencia<T> implements Conjunto<T>{
 	    return false;
 	}
 
+    @Override public boolean contiene(T elementoAVerificar){
+        return false;
+    }
+
 }

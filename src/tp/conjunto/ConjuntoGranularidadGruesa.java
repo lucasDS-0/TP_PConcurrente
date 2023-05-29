@@ -61,4 +61,8 @@ public class ConjuntoGranularidadGruesa<T> implements Conjunto<T>{
 	    return false;
 	}
 
+    @Override public boolean contiene(T elemento) {
+        return false;
+    }
+
 }
