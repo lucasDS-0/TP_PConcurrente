@@ -5,6 +5,7 @@ import tp.hilos.*;
 
 import java.io.PrintWriter;
 import java.util.Comparator;
+import java.util.Random;
 
 public class Main{
    
@@ -43,6 +44,8 @@ public class Main{
         cHT = 10000;
         cOT = 10000;
         cOH = cOT/cHT;      
+        
+        Random rand = new Random();
 						
 	    System.out.println("Experimento 1 :: INI");
 	    
@@ -69,13 +72,16 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                new HiloAgregar<String>(cgf, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloAgregar<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                new HiloContiene<String>(cgf, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloContiene<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                new HiloRemover<String>(cgf, "A", cOH).start();
+    		            int valor = rand.nextInt(100);
+		                new HiloRemover<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            
 		            end = System.currentTimeMillis();
@@ -88,13 +94,16 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                new HiloAgregar<String>(cso, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloAgregar<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                new HiloContiene<String>(cso, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloContiene<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                new HiloRemover<String>(cso, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloRemover<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            
 		            end = System.currentTimeMillis();
@@ -107,13 +116,16 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                new HiloAgregar<String>(csl, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloAgregar<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                new HiloContiene<String>(csl, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloContiene<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                new HiloRemover<String>(csl, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloRemover<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            
 		            end = System.currentTimeMillis();
@@ -166,13 +178,16 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                new HiloAgregar<String>(cgf, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloAgregar<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                new HiloContiene<String>(cgf, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloContiene<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                new HiloRemover<String>(cgf, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloRemover<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            
 		            end = System.currentTimeMillis();
@@ -185,13 +200,16 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                new HiloAgregar<String>(cso, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloAgregar<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                new HiloContiene<String>(cso, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloContiene<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                new HiloRemover<String>(cso, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloRemover<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            
 		            end = System.currentTimeMillis();
@@ -204,13 +222,16 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                new HiloAgregar<String>(csl, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloAgregar<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                new HiloContiene<String>(csl, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloContiene<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                new HiloRemover<String>(csl, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloRemover<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            
 		            end = System.currentTimeMillis();
@@ -227,6 +248,7 @@ public class Main{
         System.out.println("Experimento 2 :: FIN");
         
         // Experimento 3
+        
         gf = new ConjuntoGranularidadFina.Factory<String>();
         so = new ConjuntoSincronizacionOptimista.Factory<String>();
         sl = new ConjuntoSinLocks.Factory<String>();
@@ -262,13 +284,16 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                new HiloAgregar<String>(cgf, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloAgregar<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                new HiloContiene<String>(cgf, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloContiene<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                new HiloRemover<String>(cgf, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloRemover<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            
 		            end = System.currentTimeMillis();
@@ -281,13 +306,16 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                new HiloAgregar<String>(cso, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloAgregar<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                new HiloContiene<String>(cso, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloContiene<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                new HiloRemover<String>(cso, "A", cOH).start();
+    		            int valor = rand.nextInt(100);
+		                new HiloRemover<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            
 		            end = System.currentTimeMillis();
@@ -300,13 +328,16 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                new HiloAgregar<String>(csl, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloAgregar<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                new HiloContiene<String>(csl, "A", cOH).start();
+		                int valor = rand.nextInt(100);
+		                new HiloContiene<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                new HiloRemover<String>(csl, "A", cOH).start();
+    		            int valor = rand.nextInt(100);
+		                new HiloRemover<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            
 		            end = System.currentTimeMillis();
@@ -322,33 +353,4 @@ public class Main{
 		}catch(Exception e) {e.getStackTrace();}
         System.out.println("Experimento 3 :: FIN");
 	}
-	
-	
-	/*
-	
-	private static void _manipularParaProbar(Conjunto.Factory<String> f,Comparator<String> comparador){
-	   	System.out.println("manipularParaProbar::INI");
-	    Conjunto<String> c = f.armarConjuntoVacio(comparador);
-	    System.out.println("manipularParaProbar::c.class: " + c.getClass().getName());
-		c.agregar("C"); System.out.println(c);    // C
-	    c.agregar("B"); System.out.println(c);    // B,C
-   	    c.agregar("A"); System.out.println(c);    // A,B,C
-   	    c.agregar("A"); System.out.println(c);    // A,B,C
-	    c.remover("B"); System.out.println(c);    // A,C
-	    c.agregar("D"); System.out.println(c);    // A,C,D
-	    c.agregar("E"); System.out.println(c);    // A,C,D,E
-	    c.remover("A"); System.out.println(c);    // C,D,E
-	    c.remover("X"); System.out.println(c);    // C,D,E
-	    c.remover("E"); System.out.println(c);    // C,D
-	    System.out.println(c.contiene("A"));      // false
-	    System.out.println(c.contiene("B"));      // false
-	    System.out.println(c.contiene("C"));      // true
-	    System.out.println(c.contiene("D"));      // true
-	    System.out.println(c.contiene("E"));      // false
-	    System.out.println(c.contiene("X"));      // false
-	    System.out.println("manipularParaProbar::FIN");
-	}
-
-    */
-
 }
