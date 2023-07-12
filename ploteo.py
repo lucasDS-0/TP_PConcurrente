@@ -19,11 +19,17 @@ def leer_valores_csv(dataframe, indices):
         valores.append([int(x) for x in dataframe.iloc[:,i]])
     return valores
 
-def plotear(tiempos, valores, leyenda):
+def plotear(exp, tiempos, valores, leyenda):
     fig, ax = plt.subplots()
     for i in range(0,3):
         ax.plot(valores, tiempos[i], label=leyenda[i])
     ax.legend()
+    ax.set_title(f"Experimento {exp}")
+    ax.set_ylabel('Tiempo (ms)')
+    if (exp == 1):
+        ax.set_xlabel('Porcentaje de hilos Agregar/Contiene/Remover')
+    else:
+        ax.set_xlabel('Cantidad de hilos')
     return fig
 
 def creacion_svg(exp, indices, leyenda):
@@ -39,7 +45,7 @@ def creacion_svg(exp, indices, leyenda):
         valores = lista_aux
     else:
         valores = valores[0]
-    figura = plotear(tiempos, valores, leyenda)
+    figura = plotear(exp, tiempos, valores, leyenda)
     figura.savefig(f"experimento_{exp}.svg")
 
 # Cuerpo
