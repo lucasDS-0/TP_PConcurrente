@@ -64,7 +64,7 @@ public class ConjuntoSinLocks<T> implements Conjunto<T>{
             while(true){
                 if (nodoAct.key() != Integer.MAX_VALUE) {
                     nodoSuc = nodoAct.sucesor().get(marked);
-                    while(marked[0]){
+                    while(marked[0] && nodoSuc.key() != Integer.MAX_VALUE){
                         snip = nodoAnt.sucesor().compareAndSet(nodoAct, nodoSuc, false, false);
                         if (!snip) continue retry;
                         nodoAct = nodoSuc;
