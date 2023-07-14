@@ -35,6 +35,8 @@ public class Main{
         Conjunto.Factory<String> so;
         Conjunto.Factory<String> sl;
 		
+		Random rand = new Random();
+		
         // Experimento 1
         
         gf = new ConjuntoGranularidadFina.Factory<String>();
@@ -44,8 +46,6 @@ public class Main{
         cHT = 10000;
         cOT = 10000;
         cOH = cOT/cHT;      
-        
-        Random rand = new Random();
 						
 	    System.out.println("Experimento 1 :: INI");
 	    
@@ -72,15 +72,15 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloAgregar<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloContiene<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-    		            int valor = rand.nextInt(100);
+    		            int valor = rand.nextInt(20);
 		                new HiloRemover<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            
@@ -94,15 +94,15 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloAgregar<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloContiene<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloRemover<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            
@@ -116,15 +116,15 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloAgregar<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloContiene<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloRemover<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            
@@ -147,7 +147,7 @@ public class Main{
         so = new ConjuntoSincronizacionOptimista.Factory<String>();
         sl = new ConjuntoSinLocks.Factory<String>();
         
-        cOT = 10000;
+        cOT = 100000;
 				
 		lapseGF = 0;
 		lapseSO = 0;
@@ -158,7 +158,7 @@ public class Main{
 	    try{
 	    
 	        int[] porcentajes = {20,40,40}; // {cC, cA, cR}
-            int[] lcHT = {100,1000, 5000, 10000, 100000};
+            int[] lcHT = {100,1000, 5000, 10000, 20000};
 	    
 		    PrintWriter output2 = new PrintWriter("experimento_2.csv");
 	        Conjunto<String> cgf = gf.armarConjuntoVacio(comparador);
@@ -178,15 +178,15 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloAgregar<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloContiene<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloRemover<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            
@@ -200,15 +200,15 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloAgregar<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloContiene<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloRemover<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            
@@ -222,15 +222,15 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloAgregar<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloContiene<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloRemover<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            
@@ -284,15 +284,15 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloAgregar<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloContiene<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloRemover<String>(cgf, String.valueOf(valor), cOH).start();
 		            }
 		            
@@ -306,15 +306,15 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloAgregar<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloContiene<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-    		            int valor = rand.nextInt(100);
+    		            int valor = rand.nextInt(20);
 		                new HiloRemover<String>(cso, String.valueOf(valor), cOH).start();
 		            }
 		            
@@ -328,15 +328,15 @@ public class Main{
            		    start = System.currentTimeMillis();
 		            
 		            for(int j = 0; j < cA; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloAgregar<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cC; j++) {
-		                int valor = rand.nextInt(100);
+		                int valor = rand.nextInt(20);
 		                new HiloContiene<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            for(int j = 0; j < cR; j++) {
-    		            int valor = rand.nextInt(100);
+    		            int valor = rand.nextInt(20);
 		                new HiloRemover<String>(csl, String.valueOf(valor), cOH).start();
 		            }
 		            
@@ -352,5 +352,6 @@ public class Main{
             output3.close();
 		}catch(Exception e) {e.getStackTrace();}
         System.out.println("Experimento 3 :: FIN");
+	
 	}
 }

@@ -32,7 +32,7 @@ def plotear(exp, tiempos, valores, leyenda):
         ax.set_xlabel('Cantidad de hilos')
     return fig
 
-def creacion_svg(exp, indices, leyenda):
+def creacion_png(exp, indices, leyenda):
     df = pd.read_csv(f"experimento_{exp}.csv", delimiter=',', header=0)
     tiempos = leer_tiempos_csv(df)
     valores = leer_valores_csv(df, indices)
@@ -46,16 +46,16 @@ def creacion_svg(exp, indices, leyenda):
     else:
         valores = valores[0]
     figura = plotear(exp, tiempos, valores, leyenda)
-    figura.savefig(f"experimento_{exp}.svg")
+    figura.savefig(f"experimento_{exp}.png")
 
 # Cuerpo
 if __name__ == '__main__':
     # Experimento 1
-    creacion_svg(1, [5,6,7], labels)
+    creacion_png(1, [5,6,7], labels)
     # Experimento 2
-    creacion_svg(2, [3], labels)
+    creacion_png(2, [3], labels)
     # Experimento 3
-    creacion_svg(3, [3], labels)
+    creacion_png(3, [3], labels)
 
     
     
